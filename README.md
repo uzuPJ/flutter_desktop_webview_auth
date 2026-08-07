@@ -6,6 +6,22 @@
 
 This package enables Firebase OAuth on desktop platforms via webview
 
+> ### ⚠️ Maintenance status: not actively maintained
+>
+> This package was built to fill a gap: OAuth sign-in flows for Flutter desktop
+> apps, at a time when the official Firebase solutions had no desktop support.
+>
+> It still works, and for some use cases it remains the nicest desktop OAuth
+> experience available — but it is not integrated with the wider FlutterFire
+> ecosystem, and Invertase is no longer actively developing it. We will keep the
+> repository public and accept the occasional community PR, but there is **no
+> guaranteed maintenance, no roadmap, and no support commitment**. Issues may go
+> unanswered.
+>
+> It's kept public because it's still useful as-is, and because it's a solid
+> starting point for anyone wanting to build a pure-Dart auth implementation.
+> If you depend on it, please pin your version and be prepared to fork.
+
 ## Supported providers:
 
 - Google
