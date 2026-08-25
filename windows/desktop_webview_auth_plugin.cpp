@@ -62,14 +62,20 @@ namespace {
 		
 		WNDCLASS webViewWindowClass = { };
 
+		// Backing storage for webViewWindowClass.lpszClassName, which WNDCLASS only
+		// stores as a raw pointer. Must outlive webViewWindowClass (i.e. the plugin
+		// instance), not just the constructor call that sets it.
+		std::wstring webViewWindowClassName_;
+
 		// Register the token of Navigation event.
 		EventRegistrationToken navigationToken;
 
 		// The popup windows in which the WebView is loaded.
 		HWND hWndWebView;
 
-		// The current Flutter view.
-		unique_ptr<FlutterView> view_;
+		// The Flutter view is owned by the plugin registrar (see
+		// PluginRegistrarWindows::implicit_view_), not by this plugin.
+		FlutterView* view_;
 
 		// Pointer to the Flutter MethodChannel.
 		unique_ptr<MethodChannel<EncodableValue>> channel_;
@@ -192,9 +198,9 @@ namespace {
 	// constructor.
 	DesktopWebviewAuthPlugin::DesktopWebviewAuthPlugin(FlutterView* view) : view_(view) {
 		// Convert short to wide string.
-		const auto temp = std::wstring(kWebViewClassName.begin(), kWebViewClassName.end());
+		webViewWindowClassName_ = std::wstring(kWebViewClassName.begin(), kWebViewClassName.end());
 
-		webViewWindowClass.lpszClassName = temp.c_str();
+		webViewWindowClass.lpszClassName = webViewWindowClassName_.c_str();
 		webViewWindowClass.lpfnWndProc = &WinProc;
 
 		channel_ = std::unique_ptr<flutter::MethodChannel<EncodableValue>>();
